@@ -66,7 +66,9 @@ POST /api/auth/login - Login user
 - Deployment (Vercel + Render)
 
 ## Author
+Moinul Islam
 Shah Mohammed Seaman
+
 
 UIU HealthCare 
 
