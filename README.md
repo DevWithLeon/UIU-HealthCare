@@ -1,16 +1,88 @@
-# React + Vite
+# UIU HealthCare System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack MERN (MongoDB, Express, React, Node.js) healthcare management system built for university project submission.  
+It includes authentication, user management, and backend API integration.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- User Registration and Login (JWT Authentication)
+- Secure password hashing using bcrypt
+- REST API with Express.js
+- MongoDB Atlas database integration
+- React frontend with API connection
+- Modular backend structure
+- Protected authentication system
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Frontend:
+- React.js
+- Axios
+- Vite
 
-## Expanding the ESLint configuration
+Backend:
+- Node.js
+- Express.js
+- MongoDB Atlas
+- JSON Web Token (JWT)
+- bcryptjs
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Project Structure
+
+UIU-HealthCare/
+├── backend/
+│   ├── models/
+│   ├── routes/
+│   ├── server.js
+│   └── .env
+│
+├── src/
+│   ├── pages/
+│   ├── services/
+│   ├── api.js
+│
+├── public/
+├── package.json
+└── README.md
+
+## Setup Instructions
+
+### Install Frontend
+npm install
+npm run dev
+
+### Install Backend
+cd backend
+npm install
+npm run dev
+
+### Environment Variables
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=secretkey
+
+## API Endpoints
+
+POST /api/auth/register - Register user  
+POST /api/auth/login - Login user  
+
+## Authentication Flow
+
+1. User registers
+2. Password hashed with bcrypt
+3. User logs in
+4. JWT token generated
+5. Token stored in frontend
+
+## Future Improvements
+
+- Appointment system
+- Doctor dashboard
+- Admin panel
+- Deployment (Vercel + Render)
+
+## Author
+
+
+UIU HealthCare 
+
