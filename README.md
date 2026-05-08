@@ -27,23 +27,7 @@ Backend:
 - JSON Web Token (JWT)
 - bcryptjs
 
-## Project Structure
 
-UIU-HealthCare/
-├── backend/
-│   ├── models/
-│   ├── routes/
-│   ├── server.js
-│   └── .env
-│
-├── src/
-│   ├── pages/
-│   ├── services/
-│   ├── api.js
-│
-├── public/
-├── package.json
-└── README.md
 
 ## Setup Instructions
 
