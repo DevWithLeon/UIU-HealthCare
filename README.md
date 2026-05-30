@@ -4,6 +4,8 @@ A full-stack, MySQL-backed digital healthcare platform designed for the Banglade
 
 ## Core Modules & Features
 
+- **Medora Premium UI Theme**: A stunning dark-mode aesthetic featuring custom glassmorphism components, floating draggable UI cards, dynamic micro-animations, and 3D stylized character graphics.
+- **Dedicated About Page**: A detailed 'About Us' page outlining the platform's vision, goals, and showcasing the founding leadership team.
 - **User Authentication**: Role-based signup and login (Patient, Doctor, Hospital, Admin) using JWT and bcrypt hashing. The backend automatically seeds a default test patient (`example@gmail.com` / `password123`) on start.
 - **Verification Page**: Verification step with mock OTP validation code (`123456`).
 - **Dashboard Interfaces**: Tailored Patient, Doctor, Hospital, and Admin dashboards.
@@ -16,7 +18,7 @@ A full-stack, MySQL-backed digital healthcare platform designed for the Banglade
 
 ## Tech Stack
 
-- **Frontend**: React.js, Axios, Lucide React, Vite, Tailwind CSS
+- **Frontend**: React.js, Vite, Axios, Lucide React, react-draggable, Vanilla CSS (Medora Design System)
 - **Backend**: Node.js, Express.js, JWT, bcryptjs, mysql2 (Connection Pool)
 - **Database**: MySQL (XAMPP local host)
 
@@ -91,6 +93,7 @@ A full-stack, MySQL-backed digital healthcare platform designed for the Banglade
 
 ---
 
-## Authors
-- Shah Mohammed Seaman
-- Moinul Islam
+## Founders
+- **Jaba Anika Kotha** (CEO & Co-Founder)
+- **Shah Mohammed Seaman** (Founder & CTO)
+- **Moinul Islam** (Co-Founder & CFO)
