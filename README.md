@@ -7,91 +7,72 @@ A full-stack, MySQL-backed digital healthcare platform designed for the Banglade
 - **Medora Premium UI Theme**: A stunning dark-mode aesthetic featuring custom glassmorphism components, floating draggable UI cards, dynamic micro-animations, and 3D stylized character graphics.
 - **Dedicated About Page**: A detailed 'About Us' page outlining the platform's vision, goals, and showcasing the founding leadership team.
 - **User Authentication**: Role-based signup and login (Patient, Doctor, Hospital, Admin) using JWT and bcrypt hashing. The backend automatically seeds a default test patient (`example@gmail.com` / `password123`) on start.
-- **Verification Page**: Verification step with mock OTP validation code (`123456`).
 - **Dashboard Interfaces**: Tailored Patient, Doctor, Hospital, and Admin dashboards.
 - **Appointment Scheduling**: Search, view, and book appointments with verified doctors. Support for cancellation by unique reference code with validation checks.
 - **Electronic Health Records**: Secure uploading and storage of lab reports and medical history. Restricts file uploads to supported formats (PDF, JPG, PNG, and DICOM) with error feedback.
 - **AI Health Assistant**: 24/7 AI chatbot for symptom checking and healthcare guidance.
-- **Mental Wellness**: Built-in self-assessment tests, breathing tools, and guides.
-- **Emergency SOS Services**: Instant request dispatching.
-- **Testing & Simulation**: Includes controls like a "Simulate Empty" doctor discovery button to test empty-state UI handling.
-
-## Tech Stack
-
-- **Frontend**: React.js, Vite, Axios, Lucide React, react-draggable, Vanilla CSS (Medora Design System)
-- **Backend**: Node.js, Express.js, JWT, bcryptjs, mysql2 (Connection Pool)
-- **Database**: MySQL (XAMPP local host)
 
 ---
 
-## Getting Started
+## 🚀 PRESENTATION SETUP GUIDE 🚀
 
-### 1. Database Setup (XAMPP MySQL)
-1. Start XAMPP (Apache and MySQL services):
-   ```bash
-   sudo /opt/lampp/lampp start
-   ```
-2. The backend server automatically initializes the `uiu_healthcare` database and creates the necessary tables (`users`, `appointments`, `medical_records`, `prescriptions`, `doctors`) on its first run.
-3. Access phpMyAdmin at: [http://localhost/phpmyadmin](http://localhost/phpmyadmin)
+Follow these **exact** steps to download and run the project perfectly on your presentation computer.
 
-### 2. Install & Start Backend
-1. Go to the backend folder:
+### Step 1: Start XAMPP (Database)
+1. Open XAMPP Control Panel and click **Start** for both **Apache** and **MySQL**.
+2. *Note: You do NOT need to manually import any `.sql` files or create a database in phpMyAdmin. The backend code will automatically create the `uiu_healthcare` database and all required tables the moment you start it!*
+
+### Step 2: Set Up the Backend
+1. Open a terminal and navigate to the `backend` folder:
    ```bash
-   cd backend
+   cd UIU-HealthCare/backend
    ```
-2. Install dependencies:
+2. Install the required Node modules:
    ```bash
    npm install
    ```
-3. Copy `.env` or set environment variables:
-   ```
+3. **CRITICAL STEP:** Because it is a security risk to upload API keys to GitHub, your `.env` file was not downloaded. You must create it manually!
+   Create a new file named exactly `.env` inside the `backend` folder.
+4. Copy and paste the following code exactly into your new `.env` file and save it:
+   ```env
    PORT=5000
    DB_HOST=localhost
    DB_USER=root
    DB_PASSWORD=
+   DB_PORT=3306
+   DB_NAME=uiu_healthcare
    JWT_SECRET=uiu_healthcare_secret_key_2026
+   GROQ_API_KEY=<YOUR_GROQ_API_KEY_HERE>
    ```
-4. Start the server:
+5. Start the backend server:
    ```bash
    npm run dev
    ```
+   *(You should see "Connected to MySQL database: uiu_healthcare" in your terminal).*
 
-### 3. Install & Start Frontend
-1. Go to the main project folder:
+### Step 3: Set Up the Frontend
+1. Open a **new** terminal (keep the backend running) and navigate to the main project folder:
    ```bash
-   cd ..
+   cd UIU-HealthCare
    ```
-2. Install dependencies:
+2. Install the frontend Node modules:
    ```bash
    npm install
    ```
-3. Start the dev server:
+3. Start the React development server:
    ```bash
    npm run dev
    ```
-4. Open the site in your browser at: [http://localhost:5173](http://localhost:5173)
+4. Open your browser and go to: **[http://localhost:5173](http://localhost:5173)**
+
+*You are now ready to present!*
 
 ---
 
-## API Endpoints
-
-### Authentication
-- `POST /api/auth/register` - Create a new user account.
-- `POST /api/auth/login` - Authenticate user and issue token.
-
-### Appointments
-- `GET /api/appointments/user/:userId` - Get all appointments for a user.
-- `POST /api/appointments` - Book a new appointment.
-- `DELETE /api/appointments/:id` - Cancel an appointment.
-
-### Health Records
-- `GET /api/records/:userId` - Get medical records for a patient.
-- `POST /api/records` - Add a new medical record.
-
-### Doctors
-- `GET /api/doctors` - Retrieve list of verified doctors.
-
----
+## Tech Stack
+- **Frontend**: React.js, Vite, Axios, Lucide React, react-draggable, Vanilla CSS (Medora Design System)
+- **Backend**: Node.js, Express.js, JWT, bcryptjs, mysql2 (Connection Pool)
+- **Database**: MySQL (XAMPP local host)
 
 ## Founders
 - **Jaba Anika Kotha** (CEO & Co-Founder)
