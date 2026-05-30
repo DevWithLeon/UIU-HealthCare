@@ -1,0 +1,470 @@
+[
+  {
+    "id": "TC001",
+    "title": "Register, log in, and access authenticated features",
+    "description": "A new patient can register, log in, and reach authenticated functionality after receiving a session token.",
+    "category": "Authentication",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the registration details for a new patient with a unique email and valid password"
+      },
+      {
+        "type": "action",
+        "description": "Submit the registration form"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials for the newly registered patient"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is signed in and authenticated features are available"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Book an appointment and see it in the appointment list",
+    "description": "An authenticated patient can book an appointment and confirm it appears in their personal appointment list.",
+    "category": "Appointments",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials for a valid patient account"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Open the appointment booking flow"
+      },
+      {
+        "type": "action",
+        "description": "Fill in valid appointment details"
+      },
+      {
+        "type": "action",
+        "description": "Submit the appointment form"
+      },
+      {
+        "type": "action",
+        "description": "Open the appointment list for the current patient"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the newly booked appointment is displayed in the patient appointment list"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Cancel an appointment and confirm it is removed from the list",
+    "description": "An authenticated patient can cancel an existing appointment and no longer see it in their updated appointment list.",
+    "category": "Appointments",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials for a valid patient account"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Open the appointment list for the current patient"
+      },
+      {
+        "type": "action",
+        "description": "Select an existing appointment to cancel"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the cancellation"
+      },
+      {
+        "type": "action",
+        "description": "Refresh the appointment list view"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the canceled appointment is no longer displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Browse verified doctors as a guest",
+    "description": "A guest can open the public doctor directory and see verified doctors listed for discovery.",
+    "category": "Doctors",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the doctor directory page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify verified doctors are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify at least one doctor profile is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "See doctor details needed before booking",
+    "description": "A guest can inspect the public doctor directory content needed to decide whether to book an appointment.",
+    "category": "Doctors",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the doctor directory page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify doctor profiles are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify doctor specialization or qualification information is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Open the doctor directory from the app entry point",
+    "description": "A guest can reach the verified doctor listing from the main browsing experience without signing in.",
+    "category": "Doctors",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the app entry point"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view verified doctors"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify verified doctors are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Upload a medical document and see it in health records",
+    "description": "An authenticated patient can upload a valid medical document and then retrieve it from their health record list.",
+    "category": "Health Records",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials for a valid patient account"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Open the medical record upload flow"
+      },
+      {
+        "type": "action",
+        "description": "Provide a valid medical document"
+      },
+      {
+        "type": "action",
+        "description": "Submit the record upload form"
+      },
+      {
+        "type": "action",
+        "description": "Open the current patient's health record list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the uploaded health record is displayed in the record list"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Browse verified doctors before booking",
+    "description": "A guest can open the verified doctor directory and see available doctor listings for discovery.",
+    "category": "Appointments",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the verified doctor directory"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify verified doctor listings are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Register with an existing email and then log in",
+    "description": "A patient can see that duplicate registration is rejected and still log in with the existing account.",
+    "category": "Authentication",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the registration details for a patient with a unique email and valid password"
+      },
+      {
+        "type": "action",
+        "description": "Submit the registration form"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the registration details again using the same email and a valid password"
+      },
+      {
+        "type": "action",
+        "description": "Submit the registration form"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials for that email and password"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a duplicate registration error is shown and the user can still sign in"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "Switch from doctor discovery to booking preparation",
+    "description": "A guest can use the public doctor directory as the starting point for a later appointment booking journey.",
+    "category": "Doctors",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the doctor directory page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify verified doctors are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the directory supports selecting a doctor for next-step booking"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "View a specific patient's health records for review",
+    "description": "An authenticated patient or care provider can open a specific patient record list and see the returned health records.",
+    "category": "Health Records",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials for a valid patient or care provider account"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Open the health records search or review view"
+      },
+      {
+        "type": "action",
+        "description": "Select a specific patient"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that the selected patient's health records are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC012",
+    "title": "Reject invalid login credentials",
+    "description": "A visitor entering incorrect credentials sees a login validation error and remains signed out.",
+    "category": "Authentication",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with an unregistered email and password"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an invalid credentials error is shown"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC013",
+    "title": "Handle an invalid appointment cancellation",
+    "description": "A patient attempting to cancel a non-existent appointment sees an error state and no cancellation confirmation.",
+    "category": "Appointments",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials for a valid patient account"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Open the appointment cancellation flow for an invalid or non-existent appointment reference"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the cancellation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a cancellation error is shown"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC014",
+    "title": "See an empty doctor directory state",
+    "description": "If no verified doctors are available, the public directory shows an empty-state message instead of a misleading list.",
+    "category": "Doctors",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the doctor directory page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an empty state message is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no doctor profiles are displayed"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC015",
+    "title": "Reject an unsupported medical file upload",
+    "description": "An authenticated patient who selects an invalid medical file payload sees upload validation feedback and no upload confirmation.",
+    "category": "Health Records",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials for a valid patient account"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Open the medical record upload flow"
+      },
+      {
+        "type": "action",
+        "description": "Provide an unsupported or invalid medical file payload"
+      },
+      {
+        "type": "action",
+        "description": "Submit the record upload form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an upload validation error is shown"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC016",
+    "title": "See doctor discovery when the list cannot be shown",
+    "description": "If the directory cannot be rendered, the public browsing experience does not show a doctor list.",
+    "category": "Doctors",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the doctor directory page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the doctor list is not displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a loading or unavailable state is visible"
+      }
+    ],
+    "priority": "Low"
+  }
+]

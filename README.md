@@ -1,74 +1,96 @@
 # UIU HealthCare System
 
-A full-stack MERN (MongoDB, Express, React, Node.js) healthcare management system built for university project submission.  
-It includes authentication, user management, and backend API integration.
+A full-stack, MySQL-backed digital healthcare platform designed for the Bangladeshi market. It features a modern React (Vite) frontend and a Node.js/Express.js backend utilizing connection pooling for MySQL (fully compatible with local XAMPP).
 
-## Features
+## Core Modules & Features
 
-- User Registration and Login (JWT Authentication)
-- Secure password hashing using bcrypt
-- REST API with Express.js
-- MongoDB Atlas database integration
-- React frontend with API connection
-- Modular backend structure
-- Protected authentication system
+- **User Authentication**: Role-based signup and login (Patient, Doctor, Hospital, Admin) using JWT and bcrypt hashing. The backend automatically seeds a default test patient (`example@gmail.com` / `password123`) on start.
+- **Verification Page**: Verification step with mock OTP validation code (`123456`).
+- **Dashboard Interfaces**: Tailored Patient, Doctor, Hospital, and Admin dashboards.
+- **Appointment Scheduling**: Search, view, and book appointments with verified doctors. Support for cancellation by unique reference code with validation checks.
+- **Electronic Health Records**: Secure uploading and storage of lab reports and medical history. Restricts file uploads to supported formats (PDF, JPG, PNG, and DICOM) with error feedback.
+- **AI Health Assistant**: 24/7 AI chatbot for symptom checking and healthcare guidance.
+- **Mental Wellness**: Built-in self-assessment tests, breathing tools, and guides.
+- **Emergency SOS Services**: Instant request dispatching.
+- **Testing & Simulation**: Includes controls like a "Simulate Empty" doctor discovery button to test empty-state UI handling.
 
 ## Tech Stack
 
-Frontend:
-- React.js
-- Axios
-- Vite
+- **Frontend**: React.js, Axios, Lucide React, Vite, Tailwind CSS
+- **Backend**: Node.js, Express.js, JWT, bcryptjs, mysql2 (Connection Pool)
+- **Database**: MySQL (XAMPP local host)
 
-Backend:
-- Node.js
-- Express.js
-- MongoDB Atlas
-- JSON Web Token (JWT)
-- bcryptjs
+---
 
+## Getting Started
 
+### 1. Database Setup (XAMPP MySQL)
+1. Start XAMPP (Apache and MySQL services):
+   ```bash
+   sudo /opt/lampp/lampp start
+   ```
+2. The backend server automatically initializes the `uiu_healthcare` database and creates the necessary tables (`users`, `appointments`, `medical_records`, `prescriptions`, `doctors`) on its first run.
+3. Access phpMyAdmin at: [http://localhost/phpmyadmin](http://localhost/phpmyadmin)
 
-## Setup Instructions
+### 2. Install & Start Backend
+1. Go to the backend folder:
+   ```bash
+   cd backend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Copy `.env` or set environment variables:
+   ```
+   PORT=5000
+   DB_HOST=localhost
+   DB_USER=root
+   DB_PASSWORD=
+   JWT_SECRET=uiu_healthcare_secret_key_2026
+   ```
+4. Start the server:
+   ```bash
+   npm run dev
+   ```
 
-### Install Frontend
-npm install
-npm run dev
+### 3. Install & Start Frontend
+1. Go to the main project folder:
+   ```bash
+   cd ..
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the dev server:
+   ```bash
+   npm run dev
+   ```
+4. Open the site in your browser at: [http://localhost:5173](http://localhost:5173)
 
-### Install Backend
-cd backend
-npm install
-npm run dev
-
-### Environment Variables
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=secretkey
+---
 
 ## API Endpoints
 
-POST /api/auth/register - Register user  
-POST /api/auth/login - Login user  
+### Authentication
+- `POST /api/auth/register` - Create a new user account.
+- `POST /api/auth/login` - Authenticate user and issue token.
 
-## Authentication Flow
+### Appointments
+- `GET /api/appointments/user/:userId` - Get all appointments for a user.
+- `POST /api/appointments` - Book a new appointment.
+- `DELETE /api/appointments/:id` - Cancel an appointment.
 
-1. User registers
-2. Password hashed with bcrypt
-3. User logs in
-4. JWT token generated
-5. Token stored in frontend
+### Health Records
+- `GET /api/records/:userId` - Get medical records for a patient.
+- `POST /api/records` - Add a new medical record.
 
-## Future Improvements
+### Doctors
+- `GET /api/doctors` - Retrieve list of verified doctors.
 
-- Appointment system
-- Doctor dashboard
-- Admin panel
-- Deployment (Vercel + Render)
+---
 
-## Author
-Moinul Islam
-Shah Mohammed Seaman
-
-
-UIU HealthCare 
-
+## Authors
+- Shah Mohammed Seaman
+- Moinul Islam

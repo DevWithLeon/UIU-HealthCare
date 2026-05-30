@@ -27,3 +27,5 @@ backend/.env
 .env backend/.env
 backend/.env
 .env
+
+testsprite_tests/tmp/config.json

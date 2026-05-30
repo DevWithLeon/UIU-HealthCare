@@ -1,0 +1,79 @@
+version: "2"
+type: backend
+tech_stack:
+  - Node.js
+  - Express.js
+  - MySQL
+  - React.js (Vite)
+features:
+  - name: Authentication
+    description: User registration and login validation
+    files:
+      - routes/auth.js
+    endpoints:
+      - method: POST
+        path: /api/auth/register
+        description: Register a new patient or user
+        auth_required: false
+        response_schema:
+          "201": User created
+          "400": User already exists
+      - method: POST
+        path: /api/auth/login
+        description: Login with email and password
+        auth_required: false
+        response_schema:
+          "200": JWT Token
+          "400": Invalid credentials
+  - name: Appointments
+    description: CRUD actions for patient appointments
+    files:
+      - routes/appointments.js
+    endpoints:
+      - method: GET
+        path: /api/appointments/user/:userId
+        description: List all appointments for a user
+        auth_required: true
+        response_schema:
+          "200": Appointment[]
+      - method: POST
+        path: /api/appointments
+        description: Book a new appointment
+        auth_required: true
+        response_schema:
+          "201": Appointment details
+      - method: DELETE
+        path: /api/appointments/:id
+        description: Cancel an appointment
+        auth_required: true
+        response_schema:
+          "200": Cancel confirmation
+  - name: Health Records
+    description: Uploading and retrieving patient medical documents
+    files:
+      - routes/records.js
+    endpoints:
+      - method: GET
+        path: /api/records/:userId
+        description: Fetch patient medical records list
+        auth_required: true
+        response_schema:
+          "200": HealthRecord[]
+      - method: POST
+        path: /api/records
+        description: Upload a new health record
+        auth_required: true
+        response_schema:
+          "201": Upload confirmation
+  - name: Doctors
+    description: Retrieve lists of available medical professionals
+    files:
+      - routes/doctors.js
+    endpoints:
+      - method: GET
+        path: /api/doctors
+        description: List verified doctors
+        auth_required: false
+        response_schema:
+          "200": Doctor[]
+known_limitations: []

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://improved-acorn-v6jvvjxwvvjj3w59r-5000.app.github.dev"
+  baseURL: "http://localhost:5000"
 });
 
 export default API;
