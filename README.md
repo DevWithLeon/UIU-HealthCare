@@ -194,13 +194,14 @@ All tests are run locally via `npm test`. The test suite is part of the reposito
    ```
 
 4. **Frontend Setup** (in a new terminal)  
+   Make sure you are in the project root directory (`UIU-HealthCare`):
    ```bash
-   cd ..                # back to project root
    npm install          # installs React, Vite, Leaflet, etc.
    npm run dev
    ```  
 
-   Open a browser and navigate to **http://localhost:5173**. You should see the Medora‑styled landing page, the About page, and the fully functional AI chatbot.  
+   Open a browser and navigate to **http://localhost:5173** (or **http://localhost:5174** if port 5173 is occupied). You should see the Medora‑styled landing page, the About page, and the fully functional AI chatbot.
+   *Note: If port 5173 is in use (e.g., by Apache), Vite will automatically fallback to 5174. The backend is configured to accept CORS requests from both ports.*  
 
 5. **Verify Everything**  
    - **Login** using the seeded demo patient: `example@gmail.com / password123`.  
