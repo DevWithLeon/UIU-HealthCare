@@ -27,6 +27,7 @@ export default function AboutPage({ navigate }) {
             <button onClick={() => navigate('about')} style={{ background: 'rgba(255,255,255,0.2)', color: 'white', border: 'none', padding: '8px 20px', borderRadius: '30px', fontSize: '0.9rem', cursor: 'pointer' }}>About Us</button>
             <button onClick={() => navigate('hospitals')} style={{ background: 'transparent', color: 'white', border: 'none', padding: '8px 20px', borderRadius: '30px', fontSize: '0.9rem', cursor: 'pointer' }}>Hospitals</button>
             <button onClick={() => navigate('doctors')} style={{ background: 'transparent', color: 'white', border: 'none', padding: '8px 20px', borderRadius: '30px', fontSize: '0.9rem', cursor: 'pointer' }}>Doctors</button>
+            <button onClick={() => navigate('forum')} style={{ background: 'transparent', color: 'white', border: 'none', padding: '8px 20px', borderRadius: '30px', fontSize: '0.9rem', cursor: 'pointer' }}>Forum</button>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>

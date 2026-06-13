@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   Heart, Activity, Calendar, FileText, Pill, AlertTriangle, 
   Settings, LogOut, Search, Bell, User, Clock, 
-  MapPin, Stethoscope, Video, ChevronRight, Download, Loader, Shield, Brain, X, Smile, Music
+  MapPin, Stethoscope, Video, ChevronRight, Download, Loader, Shield, Brain, X, Smile, Music, MessageSquare, Droplet
 } from 'lucide-react';
 import API from '../api';
 
@@ -617,6 +617,14 @@ export default function PatientDashboard({ user, onLogout, navigate }) {
         </div>
 
         <div className="flex flex-col gap-2 border-t border-slate-800 pt-4 mt-4">
+          <button className="sidebar-item" style={{ width: '100%', border: 'none', background: 'transparent', textAlign: 'left' }} onClick={() => navigate('forum')}>
+            <MessageSquare size={20} color="#BEF264" />
+            <span className="text-white">Community Forum</span>
+          </button>
+          <button className="sidebar-item" style={{ width: '100%', border: 'none', background: 'transparent', textAlign: 'left' }} onClick={() => navigate('blood-donors')}>
+            <Droplet size={20} color="#EF4444" fill="#EF4444" />
+            <span className="text-white">Blood Donors</span>
+          </button>
           <button className="sidebar-item" style={{ width: '100%', border: 'none', background: 'transparent', textAlign: 'left' }} onClick={() => navigate('emergency')}>
             <AlertTriangle size={20} color="#EF4444" />
             <span className="text-red-500 font-bold">Emergency SOS</span>

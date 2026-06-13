@@ -47,6 +47,29 @@ export default function RegisterPage({ navigate }) {
       setError('Please fill in all fields.');
       return;
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRegex.test(form.email)) {
+      setError('Please enter a valid email address ending with a domain extension (e.g. name@mail.com).');
+      return;
+    }
+
+    // Bangladesh phone validation
+    let digits = form.phone.replace(/\D/g, '');
+    if (digits.startsWith('880')) {
+      digits = digits.substring(2);
+    } else if (digits.startsWith('88')) {
+      digits = '0' + digits.substring(2);
+    }
+    const bdPhoneRegex = /^01[3-9]\d{8}$/;
+    if (!bdPhoneRegex.test(digits)) {
+      setError('Please enter a valid 11-digit Bangladesh phone number (e.g. 017XXXXXXXX).');
+      return;
+    }
+
+    // Update form state with normalized phone
+    update('phone', digits);
+
     setLoading(true);
     try {
       await API.post('/api/auth/check-email', { email: form.email });
@@ -56,6 +79,27 @@ export default function RegisterPage({ navigate }) {
       setLoading(false);
       setError(err.response?.data?.error || 'Email check failed.');
     }
+  };
+
+  const handleCheckPassword = () => {
+    setError('');
+    if (!form.password || !form.confirm) {
+      setError('Please fill in both password fields.');
+      return;
+    }
+    if (form.password.length < 8) {
+      setError('Password must be at least 8 characters long.');
+      return;
+    }
+    if (passwordStrength() < 3) {
+      setError('Password is too weak. Ensure it has uppercase letters, numbers, and symbols.');
+      return;
+    }
+    if (form.password !== form.confirm) {
+      setError('Passwords do not match.');
+      return;
+    }
+    setStep(4);
   };
 
   const currentRole = roles.find(r => r.id === selectedRole);
@@ -199,6 +243,14 @@ export default function RegisterPage({ navigate }) {
             <>
               <h2 style={{ fontSize: '2rem', fontWeight: 800, color: 'white', marginBottom: '8px', letterSpacing: '-0.5px' }}>Create Password</h2>
               <p style={{ color: 'rgba(255,255,255,0.6)', marginBottom: '32px', fontSize: '0.95rem' }}>Must be at least 8 characters with uppercase, number and symbol</p>
+
+              {error && (
+                <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: 12, padding: '12px 16px', marginBottom: '20px', display: 'flex', gap: '10px', alignItems: 'center' }}>
+                  <AlertCircle size={18} color="#FCA5A5" />
+                  <span style={{ color: '#FCA5A5', fontSize: '0.9rem', fontWeight: 500 }}>{error}</span>
+                </div>
+              )}
+
               <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                 <div>
                   <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'rgba(255,255,255,0.8)', display: 'block', marginBottom: '8px' }}>Password</label>
@@ -229,7 +281,7 @@ export default function RegisterPage({ navigate }) {
                   )}
                 </div>
               </div>
-              <button style={{ width: '100%', marginTop: '32px', padding: '16px', fontSize: '1rem', borderRadius: 14, background: '#BEF264', color: '#064E3B', fontWeight: 800, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }} onClick={() => setStep(4)}>
+              <button style={{ width: '100%', marginTop: '32px', padding: '16px', fontSize: '1rem', borderRadius: 14, background: '#BEF264', color: '#064E3B', fontWeight: 800, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }} onClick={handleCheckPassword}>
                 Continue <ChevronRight size={18} />
               </button>
             </>

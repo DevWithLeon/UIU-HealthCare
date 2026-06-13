@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Heart, Shield, Users, Activity, FileText, CheckCircle,
-  XCircle, LogOut, Search, Bell, DollarSign, RefreshCw, AlertCircle, Eye
+  XCircle, LogOut, Search, Bell, DollarSign, RefreshCw, AlertCircle, Eye, MessageSquare, Droplet
 } from 'lucide-react';
 import API from '../api';
 
@@ -108,6 +108,14 @@ export default function InsuranceDashboard({ user, onLogout, navigate }) {
             <div className="text-white font-bold text-sm">{user?.name || 'Insurance Admin'}</div>
             <div className="text-slate-400 text-xs">{user?.email}</div>
           </div>
+          <button className="sidebar-item" style={{ width: '100%', border: 'none', background: 'transparent', textAlign: 'left', color: '#94A3B8' }} onClick={() => navigate('forum')}>
+            <MessageSquare size={20} color="#BEF264" />
+            Community Forum
+          </button>
+          <button className="sidebar-item" style={{ width: '100%', border: 'none', background: 'transparent', textAlign: 'left', color: '#94A3B8' }} onClick={() => navigate('blood-donors')}>
+            <Droplet size={20} color="#EF4444" fill="#EF4444" />
+            Blood Donors
+          </button>
           <button className="sidebar-item" style={{ width: '100%', border: 'none', background: 'transparent', textAlign: 'left', color: '#94A3B8' }} onClick={onLogout}>
             <LogOut size={20} />
             Logout

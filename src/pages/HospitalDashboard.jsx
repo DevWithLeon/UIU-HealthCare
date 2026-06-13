@@ -3,7 +3,7 @@ import {
   Heart, Building, Users, Calendar, Ambulance, LogOut,
   Search, Bell, TrendingUp, Activity, RefreshCw,
   CheckCircle, AlertTriangle, XCircle, Phone, MapPin,
-  FileText, Trash2, Eye, FileUp
+  FileText, Trash2, Eye, FileUp, MessageSquare, Droplet
 } from 'lucide-react';
 import API from '../api';
 
@@ -167,6 +167,12 @@ export default function HospitalDashboard({ user, onLogout, navigate }) {
             <div className="text-white font-bold text-sm">{user?.name || 'Hospital'}</div>
             <div className="text-slate-400 text-xs">{user?.email}</div>
           </div>
+          <button className="sidebar-item" style={{ width: '100%', border: 'none', background: 'transparent', textAlign: 'left' }} onClick={() => navigate('forum')}>
+            <MessageSquare size={20} color="#BEF264" /> Community Forum
+          </button>
+          <button className="sidebar-item" style={{ width: '100%', border: 'none', background: 'transparent', textAlign: 'left' }} onClick={() => navigate('blood-donors')}>
+            <Droplet size={20} color="#EF4444" fill="#EF4444" /> Blood Donors
+          </button>
           <button className="sidebar-item" style={{ width: '100%', border: 'none', background: 'transparent', textAlign: 'left' }} onClick={onLogout}>
             <LogOut size={20} /> Logout
           </button>

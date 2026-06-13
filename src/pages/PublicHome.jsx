@@ -89,6 +89,8 @@ export default function PublicHome({ navigate }) {
             <button onClick={() => navigate('about')} style={{ background: 'transparent', color: 'white', border: 'none', padding: '8px 20px', borderRadius: '30px', fontSize: '0.9rem', cursor: 'pointer' }}>About Us</button>
             <button onClick={() => navigate('hospitals')} style={{ background: 'transparent', color: 'white', border: 'none', padding: '8px 20px', borderRadius: '30px', fontSize: '0.9rem', cursor: 'pointer' }}>Hospitals</button>
             <button onClick={() => navigate('doctors')} style={{ background: 'transparent', color: 'white', border: 'none', padding: '8px 20px', borderRadius: '30px', fontSize: '0.9rem', cursor: 'pointer' }}>Doctors</button>
+            <button onClick={() => navigate('forum')} style={{ background: 'transparent', color: 'white', border: 'none', padding: '8px 20px', borderRadius: '30px', fontSize: '0.9rem', cursor: 'pointer' }}>Forum</button>
+            <button onClick={() => navigate('blood-donors')} style={{ background: 'transparent', color: 'white', border: 'none', padding: '8px 20px', borderRadius: '30px', fontSize: '0.9rem', cursor: 'pointer' }}>Blood Donors</button>
             <button onClick={() => navigate('mental-wellness')} style={{ background: 'transparent', color: 'white', border: 'none', padding: '8px 20px', borderRadius: '30px', fontSize: '0.9rem', cursor: 'pointer' }}>Wellness</button>
           </div>
 

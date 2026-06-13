@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Heart, Users, Calendar, FileText, Pill, DollarSign,
   LogOut, Search, Bell, Clock, Video, CheckCircle, XCircle,
-  AlertCircle, RefreshCw, User, Download, Plus, Trash2, Eye, FileUp
+  AlertCircle, RefreshCw, User, Download, Plus, Trash2, Eye, FileUp, MessageSquare, Droplet
 } from 'lucide-react';
 import API from '../api';
 
@@ -504,6 +504,12 @@ export default function DoctorDashboard({ user, onLogout, navigate }) {
             <div className="text-white font-bold text-sm">{user?.name || 'Doctor'}</div>
             <div className="text-slate-400 text-xs">{user?.email}</div>
           </div>
+          <button className="sidebar-item" style={{ width: '100%', border: 'none', background: 'transparent', textAlign: 'left' }} onClick={() => navigate('forum')}>
+            <MessageSquare size={20} color="#BEF264" /> Community Forum
+          </button>
+          <button className="sidebar-item" style={{ width: '100%', border: 'none', background: 'transparent', textAlign: 'left' }} onClick={() => navigate('blood-donors')}>
+            <Droplet size={20} color="#EF4444" fill="#EF4444" /> Blood Donors
+          </button>
           <button className="sidebar-item" style={{ width: '100%', border: 'none', background: 'transparent', textAlign: 'left' }} onClick={onLogout}>
             <LogOut size={20} /> Logout
           </button>

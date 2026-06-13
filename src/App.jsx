@@ -13,6 +13,8 @@ import AIAssistantPage from './pages/AIAssistantPage';
 import MentalWellnessPublic from './pages/MentalWellnessPublic';
 import InsuranceDashboard from './pages/InsuranceDashboard';
 import AboutPage from './pages/AboutPage';
+import ForumPage from './pages/ForumPage';
+import BloodDonorPage from './pages/BloodDonorPage';
 
 export default function App() {
   const [page, setPage] = useState('home');
@@ -86,6 +88,8 @@ export default function App() {
       {page === 'admin-dashboard' && <AdminDashboard {...commonProps} />}
       {page === 'about' && <AboutPage {...commonProps} />}
       {page === 'insurance-dashboard' && <InsuranceDashboard {...commonProps} />}
+      {page === 'forum' && <ForumPage {...commonProps} />}
+      {page === 'blood-donors' && <BloodDonorPage {...commonProps} />}
     </div>
   );
 }

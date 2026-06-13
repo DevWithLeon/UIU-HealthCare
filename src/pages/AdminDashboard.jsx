@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Shield, Users, Activity, LogOut, Search, Bell,
   CheckCircle, XCircle, Building, FileText, RefreshCw,
-  Calendar, AlertTriangle, Trash2, UserCheck
+  Calendar, AlertTriangle, Trash2, UserCheck, MessageSquare, Droplet, Database
 } from 'lucide-react';
 import API from '../api';
 
@@ -79,6 +79,22 @@ export default function AdminDashboard({ user, onLogout, navigate }) {
     }
   };
 
+  const resetUserPassword = async (id, name) => {
+    const newPass = window.prompt(`Enter new password for ${name} (minimum 8 characters):`);
+    if (newPass === null) return;
+    if (newPass.length < 8) {
+      alert('Password must be at least 8 characters long.');
+      return;
+    }
+    try {
+      const res = await API.put(`/api/auth/users/${id}/reset-password`, { password: newPass }, { headers: { Authorization: `Bearer ${token()}` } });
+      alert(res.data.message || 'Password updated successfully!');
+      fetchAll();
+    } catch (err) {
+      alert('Password reset failed: ' + (err.response?.data?.error || err.message));
+    }
+  };
+
   const updateAptStatus = async (id, status) => {
     try {
       await API.put(`/api/appointments/${id}/status`, { status }, { headers: { Authorization: `Bearer ${token()}` } });
@@ -113,6 +129,15 @@ export default function AdminDashboard({ user, onLogout, navigate }) {
             <div className="text-white font-bold text-sm">{user?.name || 'Admin'}</div>
             <div className="text-slate-400 text-xs">{user?.email}</div>
           </div>
+          <button className="sidebar-item" style={{ width: '100%', border: 'none', background: 'transparent', textAlign: 'left', color: '#94A3B8' }} onClick={() => navigate('forum')}>
+            <MessageSquare size={20} color="#BEF264" /> Community Forum
+          </button>
+          <button className="sidebar-item" style={{ width: '100%', border: 'none', background: 'transparent', textAlign: 'left', color: '#94A3B8' }} onClick={() => navigate('blood-donors')}>
+            <Droplet size={20} color="#EF4444" fill="#EF4444" /> Blood Donors
+          </button>
+          <a href="http://localhost:5000/api/auth/db-viewer" target="_blank" rel="noopener noreferrer" className="sidebar-item" style={{ width: '100%', border: 'none', background: 'transparent', textAlign: 'left', color: '#94A3B8', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Database size={20} color="#F59E0B" /> Database Explorer
+          </a>
           <button className="sidebar-item" style={{ width: '100%', border: 'none', background: 'transparent', textAlign: 'left', color: '#94A3B8' }} onClick={onLogout}>
             <LogOut size={20} /> Logout
           </button>
@@ -211,6 +236,13 @@ export default function AdminDashboard({ user, onLogout, navigate }) {
                                 style={{ padding: '4px 8px' }}
                               >
                                 {u.is_banned ? 'Unban' : 'Ban'}
+                              </button>
+                              <button 
+                                className="btn btn-sm btn-outline text-amber-600"
+                                onClick={() => resetUserPassword(u.id, u.name)}
+                                style={{ padding: '4px 8px' }}
+                              >
+                                Reset Pass
                               </button>
                               <button className="btn btn-danger btn-sm" onClick={() => deleteUser(u.id)}><Trash2 size={14}/></button>
                             </div>

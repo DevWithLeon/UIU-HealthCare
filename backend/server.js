@@ -7,7 +7,7 @@ const { initializeDatabase } = require('./db');
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3000'],
+  origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://localhost:3000'],
   credentials: true
 }));
 app.use(express.json());
@@ -28,6 +28,8 @@ app.use('/api/emergencies',  require('./routes/emergencyRoutes'));
 app.use('/api/insurance',    require('./routes/insuranceRoutes'));
 app.use('/api/prescriptions', require('./routes/prescriptionRoutes'));
 app.use('/api/tests',        require('./routes/testRoutes'));
+app.use('/api/forum',        require('./routes/forumRoutes'));
+app.use('/api/blood-donors', require('./routes/bloodDonorRoutes'));
 
 // Public Stats for Landing Page
 app.get('/api/stats', async (req, res) => {

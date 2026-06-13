@@ -178,6 +178,44 @@ async function createTables() {
     )
   `);
 
+  // ── Forum Posts ─────────────────────────────────────────────────────────────
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS forum_posts (
+      id          INT AUTO_INCREMENT PRIMARY KEY,
+      user_id     INT NOT NULL,
+      title       VARCHAR(255) NOT NULL,
+      content     TEXT NOT NULL,
+      category    VARCHAR(100) NOT NULL,
+      created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    )
+  `);
+
+  // ── Forum Comments ──────────────────────────────────────────────────────────
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS forum_comments (
+      id          INT AUTO_INCREMENT PRIMARY KEY,
+      post_id     INT NOT NULL,
+      user_id     INT NOT NULL,
+      content     TEXT NOT NULL,
+      created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (post_id) REFERENCES forum_posts(id) ON DELETE CASCADE,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    )
+  `);
+
+  // ── Forum Votes ─────────────────────────────────────────────────────────────
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS forum_votes (
+      user_id     INT NOT NULL,
+      post_id     INT NOT NULL,
+      vote_value  TINYINT NOT NULL,
+      PRIMARY KEY (user_id, post_id),
+      FOREIGN KEY (post_id) REFERENCES forum_posts(id) ON DELETE CASCADE,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    )
+  `);
+
   // ── Safe ALTER for missing columns ─────────────────────────────────────────
   const safeAlter = async (sql) => { try { await pool.query(sql); } catch (_) {} };
   await safeAlter("ALTER TABLE prescriptions ADD COLUMN advice TEXT");
@@ -239,6 +277,43 @@ async function createTables() {
   if (demoDoctorUser.length > 0) {
     const docUserId = demoDoctorUser[0].id;
     await pool.query("UPDATE doctors SET user_id = ? WHERE name = 'Dr. Aisha Rahman' AND (user_id IS NULL OR user_id = 0)", [docUserId]);
+  }
+
+  // ── Blood Donors Table ──────────────────────────────────────────────────────
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS blood_donors (
+      id          INT AUTO_INCREMENT PRIMARY KEY,
+      user_id     INT NULL,
+      name        VARCHAR(255) NOT NULL,
+      blood_group VARCHAR(10) NOT NULL,
+      phone       VARCHAR(50) NOT NULL,
+      country     VARCHAR(100) DEFAULT 'Bangladesh',
+      district    VARCHAR(100) NOT NULL,
+      location    VARCHAR(255) NOT NULL,
+      created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    )
+  `);
+
+  const [donorCheck] = await pool.query('SELECT COUNT(*) as c FROM blood_donors WHERE user_id IS NULL');
+  if (donorCheck[0].c < 100) {
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      const donorsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'donors.json'), 'utf8'));
+      
+      // Clear incomplete automatic seedings
+      await pool.query('DELETE FROM blood_donors WHERE user_id IS NULL');
+      
+      const values = donorsData.map(d => [d.name, d.blood_group, d.phone, d.country, d.district, d.location]);
+      await pool.query(`
+        INSERT INTO blood_donors (name, blood_group, phone, country, district, location)
+        VALUES ?
+      `, [values]);
+      console.log('Seeded 100 blood donors.');
+    } catch (err) {
+      console.error('Failed to seed blood donors:', err);
+    }
   }
 
   console.log('Database tables verified/created successfully.');
