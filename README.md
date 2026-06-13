@@ -15,7 +15,7 @@ The project was built **jointly by the development team** (Shah Mohammed Sea
 7. [Testing & Quality Assurance](#testing--quality-assurance)  
 8. [Presentation‑Ready Setup Guide](#presentation‑ready-setup-guide)  
 9. [Founders & Roles](#founders--roles)  
-10. [Future Roadmap](#future‑roadmap)  
+10. [Future Roadmap](#future-roadmap)  
 
 ---  
 
@@ -24,9 +24,12 @@ UIU HealthCare is a **web‑native health‑care ecosystem** that offers:
 
 * **Secure authentication** with role‑based access (Patient, Doctor, Hospital, Admin).  
 * **Dynamic dashboards** for each role, built with a custom **Medora‑inspired dark UI** (glass‑morphism, micro‑animations, draggable widgets).  
-* ** AI‑driven health assistant** powered by **Groq Cloud** (Llama‑3 / Mixtral) for 24/7 symptom checking and navigation help.  
+* **AI‑driven health assistant** powered by **Groq Cloud** (Llama‑3 / Mixtral) for 24/7 symptom checking and navigation help.  
 * **Open‑source map integration** (Leaflet + OpenStreetMap) for locating hospitals without external licensing costs.  
 * **Appointment scheduling**, **electronic health records**, **SOS emergency dispatch**, and **mental‑wellness tools**.  
+* **Community Forum System** (New) – A discussion platform with categorization, upvoting/downvoting, and comment threads.
+* **Blood Donor Search & Registry** (New) – Find or register as a donor with location and blood group filters.
+* **Administrative Control Suite** (New) – Admin password reset, action audit logs, and real-time database viewer.
 
 All components communicate via a **RESTful API** built with **Node.js/Express** and a **MySQL** database (XAMPP).  
 
@@ -35,14 +38,14 @@ All components communicate via a **RESTful API** built with **Node.js/Express** 
 ## 2. Team Collaboration & Workflow
 | Member | Role | Primary Contributions |
 |--------|------|-----------------------|
-| **Shah Mohammed Seaman** | Founder & CTO | Designed the overall architecture, implemented the backend (authentication, DB init, API endpoints), and integrated the AI chatbot. |
+| **Shah Mohammed Seaman** | Founder & CTO | Designed the overall architecture, implemented the backend (authentication, DB init, API endpoints), integrated the AI chatbot, forum, blood donor system, and admin auditing tools. |
 | **Moinul Islam** | Co‑Founder & CFO | Set up the financial & reporting side, managed database schema, and oversaw the deployment scripts. |
-| **Jaba Anika Kotha** | CEO & Co‑Founder | Led UI/UX design, defined the Medora visual language, built the React components, and coordinated the presentation material. |
+| **Jaba Anika Kotha** | CEO & Co‑Founder | Led UI/UX design, defined the Medora visual language, built the React components (including Forum and Donor views), and coordinated the presentation material. |
 
 Our development cycle followed a **Kanban‑style board** in GitHub Projects:
 
 1. **Backlog → To‑Do → In‑Progress → Review → Done**.  
-2. Each feature was broken down into **small, testable tickets** (e.g., “Add draggable dashboard card”, “Integrate Leaflet map”).  
+2. Each feature was broken down into **small, testable tickets** (e.g., “Add draggable dashboard card”, “Integrate Leaflet map”, "Implement BD Phone validation gates").  
 3. Pull requests were reviewed by the whole team, ensuring **code quality**, **consistent styling**, and **security** (no secrets in the repo).  
 4. Continuous integration was performed locally (linting, unit tests) before each commit.  
 
@@ -50,12 +53,12 @@ Our development cycle followed a **Kanban‑style board** in GitHub Projects:
 
 ## 3. Architecture & Tech Stack
 ```
-┌─────────────────────┐      ┌───────────────────────┐
-│  Frontend (React)   │ <--► │   Backend (Express)    │
-│  Vite + Vanilla CSS│      │  Node.js + JWT + Bcrypt│
-│  React‑Leaflet      │      │  MySQL (mysql2/pool)   │
-│  React‑Draggable    │      │  Groq Cloud (AI)       │
-└─────────────────────┘      └───────────────────────┘
+┌─────────────────────┐      ┌────────────────────────┐
+│  Frontend (React)   │ <--► │    Backend (Express)   │
+│  Vite + Vanilla CSS │      │ Node.js + JWT + Bcrypt │
+│  React‑Leaflet      │      │ MySQL (mysql2/pool)    │
+│  React‑Draggable    │      │ Groq Cloud (AI)        │
+└─────────────────────┘      └────────────────────────┘
                ▲                         ▲
                │                         │
         HTTPS Requests                DB Queries
@@ -110,6 +113,28 @@ Our development cycle followed a **Kanban‑style board** in GitHub Projects:
 ### 4.7 Emergency SOS Service  
 * One‑click button triggers a POST to `/api/sos` which records the request and notifies the nearest hospital via a mock webhook (simulated for demo).  
 
+### 4.8 Community Forum System 💬
+* **Reddit-style discussion board** accessible to registered users.
+* Users can post under specific health categories (e.g., General, Mental Health, Medicine, Fitness).
+* **Interactive Score System**: Upvoting/downvoting implemented via SQL `ON DUPLICATE KEY UPDATE` to track user votes in a dedicated `forum_votes` table.
+* **Nested Comments**: Patients, doctors, and guests can engage in threaded discussions. Users can delete their own posts/comments, and admins hold global moderation power.
+
+### 4.9 Blood Donor Search & Registry 🩸
+* **Public Search Engine**: Users can search and filter blood donors by blood group, district, and keyword (name, location, phone).
+* **Self-Registration**: Authenticated users can register as active blood donors. Standard validation applies to prevent duplicate profile creation.
+* Users can update or revoke (delete) their donor profiles at any time. Admins can moderate or remove any donor profile directly.
+
+### 4.10 Registration Validation Gates 🔐
+To guarantee high-quality database entries, several validation filters are enforced on both the client (`RegisterPage.jsx`) and server (`authRoutes.js`):
+* **Email Validator**: Standard regex check (`/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/`) enforcing domain extension syntax.
+* **Bangladesh Phone Validator**: Automatically normalizes phone input by stripping symbols/spaces, handles national country codes (`+880` / `88`), and validates the remaining 11 digits against the Bangladesh operator standard `/^01[3-9]\d{8}$/`.
+* **Password Strength Checker**: Blocks common/weak passwords by requiring a minimum of 8 characters, mixed case letters, digits, and special characters.
+
+### 4.11 Administrative Control Suite & DB Explorer 🛢️
+* **Admin Password Override**: Admins can force-reset any user's password securely (bypassing normal verification steps, but validation checks still apply).
+* **Administrative Audit Logging**: All password reset overrides are documented in an `audit_logs` table containing the `admin_id`, targeted `user_id`, action type, and timestamps for compliance auditing.
+* **Real-time Database Explorer**: An admin-only debugging route `/api/auth/db-viewer` renders dynamic HTML tables directly from the live database (`users`, `blood_donors`, `forum_posts`) to assist developer inspection and data flow tracking.
+
 ---  
 
 ## 5. Implementation Highlights  
@@ -122,6 +147,8 @@ Our development cycle followed a **Kanban‑style board** in GitHub Projects:
 | **API Security** | All secret values (`JWT_SECRET`, `GROQ_API_KEY`) live only in `backend/.env`. The file is listed in `.gitignore` and never pushed. A pre‑commit hook (via `husky`) runs `dotenv-linter` to ensure the env file is present locally. |
 | **Testing Suite** | Used **TestSprite** to auto‑generate functional test plans covering authentication, booking flow, and file upload. The generated tests run against the live dev server during CI (local CI via npm script). |
 | **Documentation Automation** | A small Node script (`scripts/generate-docs.js`) extracts JSDoc comments from the backend and writes them to `docs/api.md`. This keeps the API docs in sync with code changes. |
+| **Validation Gates** | Dual-layer regex checking for Bangladesh mobile numbers and emails, preventing database pollution. |
+| **Live Audit Logging** | Triggered automatically on admin operations to provide administrative accountability. |
 
 ---  
 
@@ -135,6 +162,8 @@ Our development cycle followed a **Kanban‑style board** in GitHub Projects:
 | **4** | Database initialization race condition when the server started before XAMPP MySQL was ready. | `await mysql.createConnection` attempted before XAMPP services were fully up. | Added a retry loop with exponential back‑off (max 5 attempts) to ensure the connection is established before creating tables. |
 | **5** | Map tiles occasionally failed to load due to CORS restrictions on OSM when served via the dev server. | Development server ran on `localhost:5173` without proper headers. | Configured Vite’s dev server proxy to forward `/tiles/*` requests, and added `crossorigin="anonymous"` to the Leaflet tile layer. |
 | **6** | Large PDF uploads caused the backend to exceed the default request body limit, resulting in `413 Payload Too Large`. | Default `express.json` limit is 100 KB. | Switched to `multer` streaming uploads; set `limits: { fileSize: 10 * 1024 * 1024 }` (10 MB). Added a UI warning for oversized files. |
+| **7** | Inconsistent phone number formats during registration (e.g. spaces, `+880` prefix, etc.) causing DB query issues. | Users inputting phone numbers using varied regional patterns. | Normalized inputs on both frontend and backend by extracting digits, trimming `88` prefixes, and validating with the pattern `^01[3-9]\d{8}$`. |
+| **8** | Lack of administrative monitoring on critical database overrides (e.g., manual credential resets). | The system lacked a persistent logging mechanism for admin-triggered modifications. | Developed a central `audit_logs` table. Every manual password reset logs the admin user, the action, and target IDs for audit reviews. |
 
 ---  
 
@@ -143,8 +172,8 @@ Our development cycle followed a **Kanban‑style board** in GitHub Projects:
 | Test Type | Tools Used | Coverage |
 |-----------|-----------|----------|
 | **Unit Tests** (backend services) | Mocha + Chai | 85 % of API routes |
-| **Integration Tests** (full request‑response flow) | Supertest | Critical paths (auth, booking, file upload) |
-| **End‑to‑End UI Tests** | TestSprite (generated test plan) | 15 high‑priority UI scenarios (login, dashboard drag, map interaction) |
+| **Integration Tests** (full request‑response flow) | Supertest | Critical paths (auth, booking, file upload, forum CRUD) |
+| **End‑to‑End UI Tests** | TestSprite (generated test plan) | 15 high‑priority UI scenarios (login, dashboard drag, map interaction, blood donor filtering) |
 | **Static Analysis** | ESLint (React) & `npm audit` | Zero high‑severity vulnerabilities |
 | **Performance Profiling** | Chrome DevTools Lighthouse | > 90 % SEO & Performance scores on the landing page |
 
@@ -164,7 +193,7 @@ All tests are run locally via `npm test`. The test suite is part of the reposito
 
 2. **Start XAMPP** (Apache + MySQL)  
    - Open the XAMPP Control Panel → click **Start** for both services.  
-   - **No manual SQL import required** – the first backend start will automatically create the `uiu_healthcare` database and all tables (`users`, `appointments`, `medical_records`, `prescriptions`, `doctors`).  
+   - **No manual SQL import required** – the first backend start will automatically create the `uiu_healthcare` database and all tables (`users`, `appointments`, `medical_records`, `prescriptions`, `doctors`, `blood_donors`, `forum_posts`, `forum_comments`, `forum_votes`, `audit_logs`).  
 
 3. **Backend Setup**  
    ```bash
@@ -208,6 +237,8 @@ All tests are run locally via `npm test`. The test suite is part of the reposito
    - **Book an appointment** → confirm it appears in the dashboard.  
    - **Interact with the chatbot** → ask “What are the symptoms of flu?” and see a quick LLM response.  
    - **Open the map** (About → Hospitals) and verify hospital markers appear.  
+   - **Access Community Forum** or **Blood Donors** pages from the patient sidebar or header to verify discussion/donor flows.
+   - **Access Database Explorer** (Admin role or directly via `http://localhost:5000/api/auth/db-viewer` in dev mode) to view real-time database state.
 
 **Important:** Keep the `.env` file **private** – do not push it to any remote repository.  
 
@@ -233,12 +264,9 @@ All tests are run locally via `npm test`. The test suite is part of the reposito
 | **Multilingual Support** | i18n with `react-intl` | Expand to Bengali, Hindi, and English. |
 | **Advanced Analytics Dashboard** | D3.js visualisations | Show aggregated health trends for hospitals and policymakers. |
 
-
-
 ---
 
 ## 👥 Founders
 - **Jaba Anika Kotha** (CEO & Co-Founder)
 - **Shah Mohammed Seaman** (Founder & CTO)
 - **Moinul Islam** (Co-Founder & CFO)
-
